@@ -2,6 +2,15 @@ const express = require('express')
 const routes = require('./routes')
 const path = require('path')
 const bodyParser = require('body-parser')
+const db = require('./config/db')
+// Crear la conexion a la base de datos
+
+require('./models/Proyectos')
+db.sync()
+    .then(() => {
+        console.log('Conectado al servidor');
+    }).catch(err => console.error('Error', err))
+
 // Crear una app de express
 const app = express()
 
