@@ -1,21 +1,25 @@
 // Importar el modelo
 const Proyectos = require('../models/Proyectos')
-const slug = require('slug')
+const slug = require('slug');
 
-exports.proyectosHome = (req, res) => {
+exports.proyectosHome = async (req, res) => {
+    const proyectos = await Proyectos.findAll();
     res.render('index', {
-        nombrePagina: 'Proyectos'
+        nombrePagina: 'Proyectos',
+        proyectos
     })
 }
 
-exports.formularioProyecto = (req, res) => {
+exports.formularioProyecto = async (req, res) => {
+    const proyectos = await Proyectos.findAll();
     res.render('nuevoProyecto', {
-        nombrePagina: 'Nuevo Proyecto'
+        nombrePagina: 'Nuevo Proyecto',
+        proyectos
     })
 }
 
 exports.nuevoProyecto = async (req, res) => {
-    console.log(req.body);
+    const proyectos = await Proyectos.findAll();
 
     // Validar que tengamos algo en el input
 
@@ -32,7 +36,8 @@ exports.nuevoProyecto = async (req, res) => {
     if (errores.length > 0) {
         res.render('nuevoProyecto', {
             nombrePagina: 'Nuevo Proyecto',
-            errores
+            errores,
+            proyectos,
         })
     } else {
         // Insertar en la base de datos
@@ -49,4 +54,23 @@ exports.nuevoProyecto = async (req, res) => {
         const proyecto = await Proyectos.create({ nombre })
         res.redirect('/')
     }
+}
+
+exports.proyectoPorUrl = async (req, res) => {
+    const proyectos = await Proyectos.findAll();
+    const proyecto = await Proyectos.findOne({
+        where: {
+            url: req.params.url
+        }
+    })
+    if (!proyecto) {
+        res.send('BAD')
+        return
+    }
+    // console.log(proyecto);
+    res.render('tareas', {
+        nombrePagina: 'Tareas del Proyecto',
+        proyecto,
+        proyectos
+    })
 }
