@@ -116,3 +116,17 @@ exports.formularioEditar = async (req, res) => {
         proyecto
     })
 }
+exports.eliminarProyecto = async (req, res, next) => {
+    // req, query o params en axios
+    // console.log(req.query);
+
+    const { urlProyecto } = req.query;
+
+    // console.log(urlProyecto);
+    // return
+    const resultado = await Proyectos.destroy({ where: { url: urlProyecto } })
+    if (!resultado) {
+        return next()
+    }
+    res.send('Proyecto eliminado correctamente')
+}
