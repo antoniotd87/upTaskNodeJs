@@ -1,7 +1,6 @@
 // Importar el modelo
 const Proyectos = require('../models/Proyectos')
-const slug = require('slug');
-
+const Tareas = require('../models/Tareas')
 exports.proyectosHome = async (req, res) => {
     const proyectos = await Proyectos.findAll();
     res.render('index', {
@@ -90,6 +89,19 @@ exports.proyectoPorUrl = async (req, res) => {
             url: req.params.url
         }
     })
+
+    // consultar tareas del proyecto actual
+    const tareas = await Tareas.findAll(
+        {
+            where:
+                { proyectoId: proyecto.id },
+            // Incluir un modelo como un JOIN
+            // include: [
+            //     { model: Proyectos }
+            // ]
+        }
+    )
+
     if (!proyecto) {
         res.send('BAD')
         return
@@ -98,7 +110,8 @@ exports.proyectoPorUrl = async (req, res) => {
     res.render('tareas', {
         nombrePagina: 'Tareas del Proyecto',
         proyecto,
-        proyectos
+        proyectos,
+        tareas
     })
 }
 

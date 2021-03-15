@@ -10,6 +10,7 @@ const helpers = require('./helpers')
 // Crear la conexion a la base de datos
 
 require('./models/Proyectos')
+require('./models/Tareas')
 db.sync()
     .then(() => {
         console.log('Conectado al servidor');
