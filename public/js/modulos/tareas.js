@@ -1,13 +1,14 @@
 import axios from "axios"
 import Swal from "sweetalert2"
+import { actualizarAvance } from "../funciones/avance"
 
 const tareas = document.querySelector('.listado-pendientes')
 
 if (tareas) {
     tareas.addEventListener('click', (e) => {
         if (e.target.classList.contains('fa-check-circle')) {
-            const idTarea = icono.parentElement.parentElement.dataset.tarea
             const icono = e.target
+            const idTarea = icono.parentElement.parentElement.dataset.tarea
 
             // reqeuest hacia /Tareas/:id
             const url = `${location.origin}/tareas/${idTarea}`
@@ -16,6 +17,8 @@ if (tareas) {
                 .then(respuesta => {
                     if (respuesta.status = 200) {
                         icono.classList.toggle('completo')
+
+                        actualizarAvance()
                     }
                 })
         }
@@ -43,18 +46,19 @@ if (tareas) {
                         .then(function (respuesta) {
                             if (respuesta.status === 200) {
                                 Swal.fire(
-                                    'Proyecto eliminado!',
+                                    'Tarea eliminada!',
                                     respuesta.data,
                                     'success'
                                 )
                                 icono.parentElement.parentElement.remove()
+                                actualizarAvance()
                             }
                         })
                         .catch(() => {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Oops...',
-                                text: 'No se pudo eliminar el proyecto!',
+                                text: 'No se pudo eliminar la tarea!',
                             })
                         })
 
