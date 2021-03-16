@@ -14,7 +14,7 @@ block contenido
             ul 
                 if tareas.length
                     each tarea in tareas
-                        li.tarea 
+                        li.tarea(data-tarea=tarea.id) 
                             p= tarea.tarea
                             .acciones
                                 if tarea.estado
@@ -29,4 +29,4 @@ block contenido
         // Acciones que se pueden realizar
         .contenedor-acciones
             a(href=`/proyectos/editar/${proyecto.id}` class="boton") Editar Proyecto
-            button#eliminar-proyecto(data-proyecto-url=proyecto.url type="butt" class="boton eliminar") Eliminar proyecto
+            button#eliminar-proyecto(data-proyecto-url=proyecto.url type="button" class="boton eliminar") Eliminar proyecto

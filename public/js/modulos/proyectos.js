@@ -32,6 +32,9 @@ if (btnEliminar) {
                             respuesta.data,
                             'success'
                         )
+                        setTimeout(() => {
+                            window.location.href = '/'
+                        }, 2000);
                     })
                     .catch(() => {
                         Swal.fire({
@@ -41,9 +44,6 @@ if (btnEliminar) {
                         })
                     })
 
-                // setTimeout(() => {
-                //     window.location.href = '/'
-                // }, 2000);
             }
 
         })
