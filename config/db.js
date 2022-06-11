@@ -11,7 +11,7 @@ const { Sequelize } = require('sequelize');
 // });
 
 // Option 2: Passing parameters separately (other dialects)
-const db = new Sequelize('uptasknode', 'tony', 'tony', {
+const db = new Sequelize('uptasknode', 'root', '', {
     host: 'localhost',
     dialect: 'mysql' /* one of 'mysql' | 'mariadb' | 'postgres' | 'mssql' */
 });
